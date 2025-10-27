@@ -1,162 +1,318 @@
-<!doctype html> 
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lorenz Dion O. Baldeo — Resume</title>
+  <title>Lorenz Dion O. Baldeo - Interactive Resume</title>
   <style>
     :root{
-      --bg:#e8f5ec;
+      --bg:#f3f8f4; /* misty green-white */
       --card:#ffffff;
-      --accent:#3a9d5d;
-      --accent-light:#63c47d;
-      --text:#162416;
-      --muted:#6b7a6b;
-      --radius:14px;
-      --mono: Arial, Helvetica, sans-serif;
+      --forest:#4a936a;
+      --leaf:#77b28c;
+      --text:#243624;
+      --muted:#6b776b;
+      --glass:rgba(255,255,255,0.7);
+      --radius:16px;
+      --maxw:1100px;
+      --trans:300ms cubic-bezier(.2,.9,.3,1);
     }
-    *{box-sizing:border-box;margin:0;padding:0}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
     body{
-      font-family:var(--mono);
-      background:linear-gradient(160deg,#d9f3e1,var(--bg));
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,var(--bg),#eaf6ec);
       color:var(--text);
-      min-height:100vh;
-    }
-    header{
-      background:var(--card);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:20px 50px;
-      box-shadow:0 4px 16px rgba(0,0,0,0.05);
-      position:sticky;top:0;z-index:999;
-    }
-    header h1{color:var(--accent);font-size:22px;}
-    nav ul{display:flex;gap:20px;list-style:none;}
-    nav a{color:var(--text);text-decoration:none;font-weight:600;position:relative;}
-    nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:.3s;}
-    nav a:hover::after{width:100%;}
-
-    .hero{
-      text-align:center;
-      padding:80px 20px 40px;
-    }
-    .hero h2{font-size:26px;color:var(--accent);}
-    .hero p{color:var(--muted);margin-top:8px;}
-
-    main{max-width:1000px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:40px;}
-
-    section{background:var(--card);padding:24px;border-radius:var(--radius);box-shadow:0 4px 18px rgba(0,0,0,0.05);}
-    section h3{color:var(--accent);margin-bottom:12px;}
-
-    .exp-item{margin-bottom:16px;}
-    .exp-title{font-weight:bold;}
-    .exp-meta{color:var(--muted);font-size:14px;margin-bottom:6px;}
-
-    details summary{cursor:pointer;color:var(--accent-light);font-weight:bold;}
-    details p{margin-top:6px;color:var(--text);}
-
-    .skills{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    .skill{background:#f3faf5;border-radius:8px;padding:10px;}
-
-    footer{
-      text-align:center;padding:30px;color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    .dropdown{position:relative;}
-    .dropdown-content{
-      display:none;position:absolute;top:100%;left:0;background:white;box-shadow:0 4px 8px rgba(0,0,0,0.1);border-radius:8px;padding:10px;min-width:180px;
+    /* sticky top profile + navbar */
+    .topwrap{position:sticky;top:0;backdrop-filter:blur(6px);z-index:40}
+    .profile-bar{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;background:linear-gradient(180deg,rgba(255,255,255,0.85),var(--glass));box-shadow:0 6px 18px rgba(36,54,36,0.06);
     }
-    .dropdown:hover .dropdown-content{display:block;}
-    .dropdown-content a{display:block;color:var(--text);padding:6px 10px;text-decoration:none;}
-    .dropdown-content a:hover{background:#e8f5ec;color:var(--accent);}
+    .profile-left{display:flex;align-items:center;gap:14px}
+    .avatar{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,var(--forest),var(--leaf));display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:22px}
+    .me{line-height:1}
+    .me h1{font-size:18px;margin:0;color:var(--forest)}
+    .me p{margin:2px 0 0 0;color:var(--muted);font-size:13px}
+
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600;transition:var(--trans)}
+    nav a:hover{background:rgba(74,147,106,0.08);color:var(--forest)}
+
+    .wrap{max-width:var(--maxw);margin:28px auto;padding:0 20px}
+
+    /* layout */
+    .grid{display:grid;grid-template-columns:360px 1fr;gap:22px}
+
+    /* left column - quick info */
+    .side{position:relative}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 8px 30px rgba(18,34,18,0.04);border:1px solid rgba(74,147,106,0.06)}
+    .card h3{color:var(--forest);margin:0 0 8px 0}
+    .contact a{color:var(--forest);text-decoration:none;font-weight:700}
+
+    /* right column - sections */
+    .sections{display:flex;flex-direction:column;gap:18px}
+    .section{overflow:hidden;border-radius:14px}
+    .section .head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;background:linear-gradient(180deg,rgba(119,178,140,0.08),transparent);cursor:pointer}
+    .section .head h4{margin:0;color:var(--forest)}
+    .section .head .meta{color:var(--muted);font-size:13px}
+    .section .body{padding:18px;border-top:1px solid rgba(36,54,36,0.03);background:linear-gradient(180deg,rgba(250,255,250,0.6),#fff);max-height:0;opacity:0;transform:translateY(-6px);transition:all var(--trans);}
+    .section.open .body{max-height:1200px;opacity:1;transform:translateY(0)}
+
+    /* subtle entrance */
+    .fade-in{opacity:0;transform:translateY(10px);transition:all 420ms cubic-bezier(.2,.9,.2,1)}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+
+    /* skills list - meaningful */
+    .skills-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .skill-item{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;border:1px solid rgba(74,147,106,0.06);background:linear-gradient(180deg,#fff,#fbfff9)}
+    .skill-ico{min-width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--leaf),var(--forest));color:white;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .skill-body h5{margin:0;font-size:14px}
+    .skill-body p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+
+    /* achievements list */
+    .ach-list{display:grid;grid-template-columns:1fr;gap:10px}
+    .ach-card{padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfff9);border:1px solid rgba(74,147,106,0.04)}
+
+    /* small helper */
+    .muted{color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr;}
+      .profile-bar{padding:12px}
+      .wrap{margin:14px auto}
+    }
+
+    /* print */
+    @media print{.topwrap, nav{display:none}.wrap{margin:0;padding:0}}
   </style>
 </head>
 <body>
-  <header>
-    <h1>Lorenz Dion O. Baldeo</h1>
-    <nav>
-      <ul>
-        <li><a href="#education">Education</a></li>
-        <li class="dropdown"><a href="#experience">Experience ▾</a>
-          <div class="dropdown-content">
-            <a href="#exp1">NOI.PH Team</a>
-            <a href="#exp2">SIP PAGASA</a>
-            <a href="#exp3">ElevateCS</a>
-            <a href="#exp4">Research</a>
+  <div class="topwrap">
+    <div class="profile-bar">
+      <div class="profile-left">
+        <div class="avatar">LD</div>
+        <div class="me">
+          <h1>Lorenz Dion O. Baldeo</h1>
+          <p>Competitive Programmer · Researcher · Developer</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#experience" onclick="openSection('experience')">Experience</a>
+        <a href="#research" onclick="openSection('research')">Research</a>
+        <a href="#achievements" onclick="openSection('achievements')">Achievements</a>
+        <a href="#skills" onclick="openSection('skills')">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+      <aside class="side">
+        <div class="card fade-in">
+          <h3>Quick Info</h3>
+          <p class="muted">Philippines · <a class="muted" href="mailto:lorenzdion16@gmail.com">lorenzdion16@gmail.com</a></p>
+          <hr style="border:none;height:1px;background:rgba(74,147,106,0.06);margin:12px 0;border-radius:2px">
+          <p class="muted">Education</p>
+          <p><strong>Philippine Science High School - SOCCSKSARGEN Region Campus</strong></p>
+          <p class="muted">GWA: 1.00 / 1.00</p>
+          <hr style="border:none;height:1px;background:rgba(74,147,106,0.06);margin:12px 0;border-radius:2px">
+          <p class="muted">Interests</p>
+          <p>Android apps, web projects, chess, cats, gaming</p>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="card fade-in">
+          <h3>Contact & Actions</h3>
+          <p class="muted">Email</p>
+          <p><a href="mailto:lorenzdion16@gmail.com" class="muted">lorenzdion16@gmail.com</a></p>
+          <p class="muted">Download</p>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="copyEmail()" style="padding:10px;border-radius:10px;border:none;background:var(--forest);color:white;cursor:pointer">Copy email</button>
+            <button onclick="downloadSelf()" style="padding:10px;border-radius:10px;border:1px solid var(--forest);background:transparent;color:var(--forest);cursor:pointer">Download HTML</button>
           </div>
-        </li>
-        <li><a href="#achievements">Achievements</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+        </div>
+      </aside>
 
-  <section class="hero">
-    <h2>Welcome to My Interactive Resume</h2>
-    <p>Competitive Programmer • Researcher • Developer</p>
-  </section>
+      <main>
+        <div id="about" class="section fade-in">
+          <div class="head" onclick="toggleSection(this)">
+            <h4>About</h4>
+            <div class="meta">Short summary</div>
+          </div>
+          <div class="body">
+            <p>I am a competitive programmer and researcher with experience in algorithmic optimization, data visualization, and applied geoscience workflows. I enjoy mentoring and building tools that help students learn problem solving.</p>
+          </div>
+        </div>
 
-  <main>
-    <section id="education">
-      <h3>Education</h3>
-      <p><strong>Philippine Science High School – SOCCSKSARGEN Region Campus</strong></p>
-      <p>Relevant Coursework: Foundations of ICT, Computational Thinking, Client-Side Web Development, Object-Oriented Programming, Data Structures & Algorithms</p>
-      <p><em>GWA: 1.00 / 1.00 (PSHS Grading System)</em></p>
-    </section>
+        <div id="experience" class="section fade-in">
+          <div class="head" onclick="toggleSection(this)">
+            <h4>Experience</h4>
+            <div class="meta">Expand for details</div>
+          </div>
+          <div class="body">
+            <div class="exp-item">
+              <div class="exp-title">NOI.PH - Junior National Training Team (2024 - 2025)</div>
+              <div class="exp-meta">Advanced algorithm training, competitive programming</div>
+              <p>Selected among top-performing participants nationwide for focused algorithmic coaching and olympiad preparation.</p>
+            </div>
 
-    <section id="experience">
-      <h3>Experience</h3>
-      <div id="exp1" class="exp-item">
-        <div class="exp-title">NOI.PH – Junior National Training Team (2024–2025)</div>
-        <div class="exp-meta">Algorithms & Competitive Programming</div>
-        <p>Selected among top-performing participants nationwide for advanced algorithm and competitive programming training.</p>
-      </div>
-      <div id="exp2" class="exp-item">
-        <div class="exp-title">Student Immersion Program (SIP): PAGASA (2024)</div>
-        <div class="exp-meta">Hydrometeorological Data Analysis & Visualization</div>
-        <p>Completed on-the-job training at PAGASA, analyzing and interpolating weather data using Kriging and ArcGIS, under supervision of PAGASA Gensan’s Lead Engineer.</p>
-      </div>
-      <div id="exp3" class="exp-item">
-        <div class="exp-title">Head Organizer – ElevateCS Mentorship Program (2024–2025)</div>
-        <p>Led a mentorship program for 20+ students, guiding them in problem-solving and inspiring participation in NOI.PH.</p>
-      </div>
-      <div id="exp4" class="exp-item">
-        <div class="exp-title">Research in Algorithmic Optimization (2025)</div>
-        <p>Project Leader for “Run-Length Priority Queue: A Heap Optimized for Repeated Elements.” Published preprint on <a href="https://doi.org/10.5281/zenodo.17448324" target="_blank">Zenodo</a>.</p>
-      </div>
-    </section>
+            <div class="exp-item">
+              <div class="exp-title">Student Immersion Program - PAGASA (2024)</div>
+              <div class="exp-meta">Hydrometeorological data analysis</div>
+              <p>On-the-job training at PAGASA Gensan, worked on Kriging interpolation and ArcGIS visualization under the Lead Engineer.</p>
+            </div>
 
-    <section id="achievements">
-      <h3>Honors and Achievements</h3>
-      <details><summary>ABAKODA 2024 – Rookie of the Year [Top 13 Nationwide]</summary><p>Recognized for outstanding performance as a first-time competitor in a national algorithmic contest.</p></details>
-      <details><summary>Tool Assisted Mathematics 2024 – Top 34 Nationwide</summary><p>Placed 34th nationwide in a Project-Euler–style contest combining mathematics, logic, and programming.</p></details>
-      <details><summary>HKICO 2024 – Gold Medal</summary><p>Ranked in the top 10% globally in computational thinking and algorithms.</p></details>
-      <details><summary>CALICO Fall ’24 – Silver Block (84th)</summary><p>Ranked in the top 25% (84th) out of 800+ global teams in an advanced algorithmic contest.</p></details>
-      <details><summary>ICSC 2025 – Pre-Finals Qualifier with Special Honors</summary><p>Qualified for the Pre-Finals round and earned Special Honors for coding excellence.</p></details>
-      <details><summary>YES Awardee 2025</summary><p>Recognized by DOST–SEI for excellence in international science and mathematics competitions.</p></details>
-    </section>
+            <div class="exp-item">
+              <div class="exp-title">Head Organizer - ElevateCS (2024 - 2025)</div>
+              <div class="exp-meta">Mentorship and community building</div>
+              <p>Led a mentorship program for grade 7-8 students, coordinated facilitators, and designed problem-solving workshops.</p>
+            </div>
+          </div>
+        </div>
 
-    <section id="skills">
-      <h3>Skills</h3>
-      <div class="skills">
-        <div class="skill"><strong>Python</strong><br><span>Advanced</span></div>
-        <div class="skill"><strong>C++</strong><br><span>Advanced</span></div>
-        <div class="skill"><strong>Web Development</strong><br><span>Intermediate</span></div>
-        <div class="skill"><strong>ArcGIS, NumPy, Matplotlib</strong><br><span>Intermediate</span></div>
-      </div>
-    </section>
+        <div id="research" class="section fade-in">
+          <div class="head" onclick="toggleSection(this)">
+            <h4>Research</h4>
+            <div class="meta">Project highlights</div>
+          </div>
+          <div class="body">
+            <div class="exp-item">
+              <div class="exp-title">Run-Length Priority Queue (2025)</div>
+              <div class="exp-meta">Project leader, lead programmer</div>
+              <p>Developed a priority queue optimized for repeated elements. Published as a preprint on Zenodo. <a href="https://doi.org/10.5281/zenodo.17448324" target="_blank">doi.org/10.5281/zenodo.17448324</a></p>
+            </div>
 
-    <section id="contact">
-      <h3>Contact</h3>
-      <p>Email: <a href="mailto:lorenzdion16@gmail.com">lorenzdion16@gmail.com</a></p>
-      <p>Location: Philippines</p>
-    </section>
-  </main>
+            <div class="exp-item">
+              <div class="exp-title">PowerUP Connect 2025</div>
+              <div class="exp-meta">Workshops on Web3 and game development</div>
+              <p>Attended talks and workshops on decentralized systems and modern game frameworks.</p>
+            </div>
+          </div>
+        </div>
 
-  <footer>
-    © 2025 Lorenz Dion O. Baldeo — Interactive Resume
-  </footer>
+        <div id="achievements" class="section fade-in">
+          <div class="head" onclick="toggleSection(this)">
+            <h4>Honors and Achievements</h4>
+            <div class="meta">Selected awards</div>
+          </div>
+          <div class="body">
+            <div class="ach-list">
+              <div class="ach-card"><strong>ABAKODA 2024</strong><div class="muted">Rookie of the Year - Top 13 Nationwide</div></div>
+              <div class="ach-card"><strong>Tool Assisted Mathematics 2024</strong><div class="muted">Top 34 Nationwide</div></div>
+              <div class="ach-card"><strong>HKICO 2024</strong><div class="muted">Gold Medal - Top 10% globally</div></div>
+              <div class="ach-card"><strong>CALICO Fall 2024</strong><div class="muted">Silver Block - 84th of 800+</div></div>
+              <div class="ach-card"><strong>ICSC 2025</strong><div class="muted">Pre-Finals Qualifier with Special Honors</div></div>
+              <div class="ach-card"><strong>YES Award 2025</strong><div class="muted">DOST-SEI recognition</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="skills" class="section fade-in">
+          <div class="head" onclick="toggleSection(this)">
+            <h4>Skills</h4>
+            <div class="meta">Hover each item for details</div>
+          </div>
+          <div class="body">
+            <div class="skills-grid">
+              <div class="skill-item" title="Click for examples" tabindex="0">
+                <div class="skill-ico">Py</div>
+                <div class="skill-body">
+                  <h5>Python</h5>
+                  <p class="muted">Algorithmic problem solving, data visualization (Matplotlib), NumPy. Example: Dijkstra simulation for optical pathfinding.</p>
+                </div>
+              </div>
+
+              <div class="skill-item" title="Click for examples" tabindex="0">
+                <div class="skill-ico">C++</div>
+                <div class="skill-body">
+                  <h5>C++</h5>
+                  <p class="muted">Competitive programming, performance-critical implementations, STL mastery.</p>
+                </div>
+              </div>
+
+              <div class="skill-item" title="Click for examples" tabindex="0">
+                <div class="skill-ico">Web</div>
+                <div class="skill-body">
+                  <h5>Web (HTML/CSS/JS)</h5>
+                  <p class="muted">Frontend basics, responsive design, small interactive projects and portfolio sites.</p>
+                </div>
+              </div>
+
+              <div class="skill-item" title="Click for examples" tabindex="0">
+                <div class="skill-ico">GIS</div>
+                <div class="skill-body">
+                  <h5>ArcGIS, NumPy</h5>
+                  <p class="muted">Spatial interpolation (Kriging), data visualization, geospatial workflows used during SIP at PAGASA.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="contact" class="section fade-in">
+          <div class="head" onclick="toggleSection(this)">
+            <h4>Contact</h4>
+            <div class="meta">Get in touch</div>
+          </div>
+          <div class="body">
+            <p>Email: <a href="mailto:lorenzdion16@gmail.com" class="muted">lorenzdion16@gmail.com</a></p>
+            <p class="muted">Location: Philippines</p>
+            <p style="margin-top:8px">Available for mentorship, research collaboration, and coding projects.</p>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <div style="height:28px"></div>
+    <p style="text-align:center;color:var(--muted)">© 2025 Lorenz Dion O. Baldeo</p>
+  </div>
+
+  <script>
+    // open/close sections
+    function toggleSection(el){
+      const parent = el.parentElement;
+      parent.classList.toggle('open');
+    }
+
+    function openSection(id){
+      const s = document.getElementById(id);
+      if(s){
+        s.classList.add('open');
+        s.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    }
+
+    // small utility: copy email
+    function copyEmail(){
+      navigator.clipboard && navigator.clipboard.writeText('lorenzdion16@gmail.com').then(()=>{
+        showToast('Email copied')
+      }).catch(()=>showToast('Could not copy'))
+    }
+
+    function downloadSelf(){
+      const blob = new Blob([document.documentElement.outerHTML],{type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'lorenz_resume.html';
+      document.body.appendChild(a);a.click();a.remove();
+    }
+
+    // fade-in on scroll
+    const faders = document.querySelectorAll('.fade-in');
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); })
+    },{threshold:0.08});
+    faders.forEach(f=>io.observe(f));
+  </script>
 </body>
 </html>
