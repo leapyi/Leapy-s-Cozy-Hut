@@ -3,194 +3,269 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lorenz Dion O. Baldeo - Portfolio</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Lorenz Dion O. Baldeo — Resume</title>
   <style>
+    /* Layout + base */
     :root{
-      --bg:#f6f8fb;
+      --bg:#eef7f0;
       --card:#ffffff;
-      --muted:#6b7280;
-      --accent:#0f62fe;
-      --glass: rgba(15,98,254,0.06);
-      --radius:12px;
-      --shadow:0 6px 20px rgba(11,18,32,0.06);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      color-scheme: light;
+      --muted:#6b776b;
+      --accent:#2f7f4f;
+      --accent-2:#5aa67a;
+      --glass: rgba(255,255,255,0.6);
+      --radius:14px;
+      --mono: Arial, Helvetica, sans-serif;
+      --maxw:1000px;
     }
-    *{box-sizing:border-box;}
-    html,body{height:100%;margin:0;background:var(--bg);color:#0b1220;}
-    a{text-decoration:none;color:var(--accent);}
-    a:hover{text-decoration:underline;}
-    .wrap{max-width:950px;margin:40px auto;padding:28px;}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--mono);
+      background:linear-gradient(180deg,var(--bg),#e9f4ea);
+      color:#122212;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px 20px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+    .wrap{width:100%;max-width:var(--maxw)}
 
-    header{display:flex;align-items:center;gap:18px;margin-bottom:28px;}
-    .avatar{width:84px;height:84px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#0066ff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:28px;}
-    h1{margin:0;font-size:24px;}
-    .sub{color:var(--muted);font-size:14px;margin-top:4px;}
+    header.top{
+      display:flex;gap:18px;align-items:center;margin-bottom:18px;
+    }
+    .avatar{
+      width:96px;height:96px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:28px;flex:0 0 96px;box-shadow:0 6px 20px rgba(47,127,79,0.14)
+    }
+    .headline{flex:1}
+    h1{margin:0;font-size:22px}
+    .sub{color:var(--muted);margin-top:6px;font-size:14px}
 
-    .grid{display:grid;grid-template-columns:1fr 340px;gap:20px;}
-    .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:transform 0.2s;}
-    .card:hover{transform:translateY(-3px);}
-    section h2{font-size:16px;margin:0 0 10px 0;color:#111827;}
-    .edu-item,.exp-item,.honor-item{margin-bottom:14px;}
-    .meta{font-size:13px;color:var(--muted);line-height:1.4;}
-    .small{font-size:13px;color:var(--muted);line-height:1.4;}
+    /* grid */
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .panel{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 24px rgba(18,34,18,0.06)}
 
-    .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
-    .skill{background:var(--glass);padding:6px 10px;border-radius:999px;font-size:13px;}
+    /* left column */
+    .section{margin-bottom:14px}
+    .section h2{margin:0 0 10px 0;font-size:16px;color:var(--accent)}
+    p{margin:0;color:#1b2b1b}
+
+    /* timeline / experience */
+    .exp-item{padding:12px;border-radius:12px;background:linear-gradient(180deg,var(--glass),rgba(255,255,255,0.95));margin-bottom:10px}
+    .exp-meta{display:flex;justify-content:space-between;gap:8px;align-items:center}
+    .exp-title{font-weight:700}
+    .chip{font-size:12px;padding:6px 8px;border-radius:999px;background:#f3faf5;color:var(--accent-2)}
+
+    /* skill bars */
+    .skill{margin-bottom:10px}
+    .skill .bar{height:10px;background:#eef6ee;border-radius:999px;overflow:hidden}
+    .skill .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:999px;transition:width 900ms cubic-bezier(.2,.9,.2,1)}
+    .skill .label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:var(--muted)}
 
     /* right column */
-    .right .card{margin-bottom:14px;}
+    .right .contact{display:flex;flex-direction:column;gap:8px}
+    .contact .row{display:flex;align-items:center;gap:8px}
+    .btn{padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .copy{background:var(--accent);color:white}
+    .download{background:transparent;border:1px solid var(--accent);color:var(--accent)}
 
-    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px;}
+    /* interactive timeline */
+    .timeline{display:flex;flex-direction:column;gap:8px}
+    .timeline button{background:transparent;border:1px solid rgba(47,127,79,0.08);padding:8px;border-radius:10px;text-align:left;width:100%;cursor:pointer}
 
     /* responsive */
-    @media (max-width:900px){
-      .grid{grid-template-columns:1fr;}
-      .right{order:2;}
+    @media (max-width:920px){
+      .grid{grid-template-columns:1fr}
+      .right{order:-1}
     }
 
-    /* print */
-    @media print{
-      body{background:white;}
-      .wrap{margin:0;padding:0;}
-      header .avatar{display:none;}
-    }
+    /* small helpers */
+    a.link{color:var(--accent);text-decoration:none}
+    .muted{color:var(--muted)}
+    .tag{font-size:12px;color:var(--muted);background:#fbfff9;padding:6px;border-radius:8px}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
+    <header class="top">
       <div class="avatar">LD</div>
-      <div>
+      <div class="headline">
         <h1>Lorenz Dion O. Baldeo</h1>
-        <div class="sub">Philippines  |  <a href="mailto:lorenzdion16@gmail.com">lorenzdion16@gmail.com</a></div>
+        <div class="sub">Philippines • <span id="email">lorenzdion16@gmail.com</span></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn copy" onclick="copyEmail()" title="Copy email">Copy email</button>
+        <button class="btn download" onclick="downloadHTML()" title="Download as HTML">Download</button>
       </div>
     </header>
 
     <div class="grid">
       <main>
-        <div class="card">
-          <section>
-            <h2>Education</h2>
-            <div class="edu-item">
-              <div style="font-weight:600">Philippine Science High School</div>
-              <div class="meta">S.Y. 2020-2021: CS 1 – Foundations of Information and Communications Technology</div>
-              <div class="meta">S.Y. 2021-2022: CS 2 – Introduction to Computational Thinking</div>
-              <div class="meta">S.Y. 2022-2023: CS 3 – Client-Side Web Development</div>
-              <div class="meta">S.Y. 2023-2024: CS 4 – Object-Oriented Programming</div>
-              <div class="meta">S.Y. 2024-2025: CS 5 – Data Structures and Algorithms</div>
-              <div class="meta">GPA: 1.00 / 1.00 (Philippine Collegiate Grading System)</div>
-            </div>
-          </section>
-
-          <section style="margin-top:12px">
-            <h2>Experience</h2>
-
-            <div class="exp-item project">
-              <div style="font-weight:600">NOI.PH Junior National Training Team (JNTT)</div>
-              <div class="meta">A.Y. 2024–2025: Selected among top-performing participants nationwide for advanced training in algorithms, competitive programming, and problem-solving strategies.</div>
-            </div>
-
-            <div class="exp-item project">
-              <div style="font-weight:600">Student Immersion Program (SIP) – PAGASA</div>
-              <div class="meta">2024: Completed research-based immersion on hydrometeorological data analysis and visualization using Python, Kriging interpolation, and AWS meteorological datasets.</div>
-            </div>
-
-            <div class="exp-item project">
-              <div style="font-weight:600">Published Research Paper</div>
-              <div class="meta">“Run-Length Priority Queue: A Heap Optimized for Repeated Elements” (2025) – Project leader and lead programmer for original data structure research.</div>
-              <a href="https://doi.org/10.5281/zenodo.17448324" target="_blank" rel="noopener">doi.org/10.5281/zenodo.17448324</a>
-            </div>
-
-            <div class="exp-item project">
-              <div style="font-weight:600">PowerUP Connect 2025</div>
-              <div class="meta">Attended workshops and knowledge-sharing sessions on blockchain, Web3, and modern game development frameworks.</div>
-            </div>
-
-            <div class="exp-item project">
-              <div style="font-weight:600">Competitive Programming</div>
-              <div class="meta">Active problem-solving on LeetCode and school community. Achieved global LeetCode rank: #372,102 (2025).</div>
-              <div class="meta">Engaged in collaborative coding sessions in the PSHS SRC Competitive Programming Community to strengthen logical thinking and algorithmic skills.</div>
-            </div>
-
-          </section>
-
-          <section style="margin-top:12px">
-            <h2>Honors and Achievements</h2>
-            <div class="honor-item">
-              <div style="font-weight:600">ABAKODA 2024 — Rookie of the Year [Top 13 Nationwide]</div>
-              <div class="small">Awarded for exemplary performance as a first-time participant in a beginner-friendly educational contest for competitive programming.</div>
-            </div>
-            <div class="honor-item">
-              <div style="font-weight:600">TAMA 2024 — Top 34 Nationwide</div>
-              <div class="small">Placed 34th in a Project-Euler-style mathematics and programming contest for Filipino high school students.</div>
-            </div>
-            <div class="honor-item">
-              <div style="font-weight:600">HKICO 2024 — Gold Medal</div>
-              <div class="small">Top 10% percentile in the Hong Kong International Computational Olympiad Heat Round, solving problems in languages like Python, C++, and Java.</div>
-            </div>
-            <div class="honor-item">
-              <div style="font-weight:600">CALICO Fall 2024 — Silver Block (84th)</div>
-              <div class="small">Top 25% in an international competitive programming contest with 1800+ participants worldwide.</div>
-            </div>
-            <div class="honor-item">
-              <div style="font-weight:600">YES Awardee 2025 — DOST-SEI</div>
-              <div class="small">National recognition for outstanding achievement in science and mathematics competitions.</div>
-            </div>
-            <div class="honor-item">
-              <div style="font-weight:600">ICSC 2025 — Pre-Finals Qualifier with Special Honors</div>
-              <div class="small">Qualified for pre-finals with special honors for exceptional problem-solving submissions in a global computer science competition.</div>
-            </div>
-          </section>
+        <div class="panel section">
+          <h2>Education</h2>
+          <p><strong>Philippine Science High School – SOCCSKSARGEN Region Campus</strong></p>
+          <p class="muted">Relevant Coursework: Foundations of ICT, Computational Thinking, Client-Side Web Development, Object-Oriented Programming, Data Structures & Algorithms</p>
+          <p class="muted">GWA: 1.00 / 1.00 (PSHS Grading System)</p>
         </div>
 
-        <div class="card" style="margin-top:14px">
-          <section>
-            <h2>Skills</h2>
-            <div class="skills">
-              <div class="skill">Python</div>
-              <div class="skill">C++</div>
-              <div class="skill">HTML</div>
-              <div class="skill">CSS</div>
-              <div class="skill">JavaScript</div>
-              <div class="skill">Git</div>
-              <div class="skill">Matplotlib</div>
-              <div class="skill">NumPy</div>
-            </div>
-          </section>
+        <div class="panel section" id="experience">
+          <h2>Experience</h2>
 
-          <section style="margin-top:12px">
-            <h2>Hobbies</h2>
-            <div class="small">Creating Android apps, building client-side webpages, chess, Minecraft, Counter-Strike, cat person</div>
-          </section>
+          <div class="exp-item">
+            <div class="exp-meta">
+              <div>
+                <div class="exp-title">NOI.PH – Junior National Training Team</div>
+                <div class="muted">2024–2025</div>
+              </div>
+              <div class="chip">Algorithms</div>
+            </div>
+            <p style="margin-top:8px">Selected among top-performing participants nationwide for advanced algorithm and competitive programming training.</p>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <div>
+                <div class="exp-title">Student Immersion Program (SIP): Hydrometeorological Data Analysis and Visualization – PAGASA</div>
+                <div class="muted">2024</div>
+              </div>
+              <div class="chip">On-the-job training</div>
+            </div>
+            <p style="margin-top:8px">Completed on-the-job training at PAGASA, collaborating with peers to analyze and interpolate weather data using Kriging and ArcGIS, supervised by the Lead Engineer at PAGASA Gensan.</p>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <div>
+                <div class="exp-title">Head Organizer – ElevateCS Mentorship Program</div>
+                <div class="muted">2024–2025</div>
+              </div>
+              <div class="chip">Leadership</div>
+            </div>
+            <p style="margin-top:8px">Led a mentorship program for 20+ Grade 7–8 students with four facilitators, guiding them in problem-solving and inspiring participation in NOI.PH.</p>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <div>
+                <div class="exp-title">Research in Algorithmic Optimization</div>
+                <div class="muted">2025</div>
+              </div>
+              <div class="chip">Research</div>
+            </div>
+            <p style="margin-top:8px">Project Leader and Lead Programmer for "Run-Length Priority Queue: A Heap Optimized for Repeated Elements." Published preprint on Zenodo. <a class="link" href="https://doi.org/10.5281/zenodo.17448324" target="_blank">doi.org/10.5281/zenodo.17448324</a></p>
+          </div>
+
         </div>
+
+        <div class="panel section">
+          <h2>Honors and Achievements</h2>
+          <div class="timeline">
+            <button onclick="showDetail('abakoda')">ABAKODA 2024 – Rookie of the Year (Top 13 Nationwide)</button>
+            <button onclick="showDetail('tama')">Tool Assisted Mathematics 2024 – Top 34 Nationwide</button>
+            <button onclick="showDetail('hkico')">HKICO 2024 – Gold Medal</button>
+            <button onclick="showDetail('calico')">CALICO Fall 2024 – Silver Block (84th)</button>
+            <button onclick="showDetail('icsc')">ICSC 2025 – Pre-Finals Qualifier with Special Honors</button>
+            <button onclick="showDetail('yes')">Youth Excellence in Science (YES) Awardee 2025</button>
+          </div>
+          <div id="detail" style="margin-top:12px"></div>
+        </div>
+
       </main>
 
       <aside class="right">
-        <div class="card">
-          <h2>Contact</h2>
-          <div class="small" style="margin-bottom:6px"><strong>Email:</strong> <a href="mailto:lorenzdion16@gmail.com">lorenzdion16@gmail.com</a></div>
-          <div class="small"><strong>Location:</strong> Philippines</div>
+        <div class="panel section">
+          <h2>Contact & Quick Actions</h2>
+          <div class="contact">
+            <div class="row"><strong>Email:</strong>&nbsp;<span id="mail2">lorenzdion16@gmail.com</span></div>
+            <div class="row"><strong>Location:</strong>&nbsp;<span class="muted">Philippines</span></div>
+            <div style="display:flex;gap:8px;margin-top:6px">
+              <button class="btn copy" onclick="copyEmail()">Copy email</button>
+              <button class="btn download" onclick="printResume()">Print</button>
+            </div>
+          </div>
         </div>
 
-        <div class="card">
-          <h2>Quick Stats</h2>
-          <div class="small">LeetCode rank: #372,102 (2025)</div>
-          <div class="small" style="margin-top:6px">NOI.PH JNTT member, Lead in Data Structure Research</div>
+        <div class="panel section">
+          <h2>Skills</h2>
+          <div class="skill"><div class="label"><span>Python</span><span class="muted">Advanced</span></div><div class="bar"><div class="fill" data-w="92"></div></div></div>
+          <div class="skill"><div class="label"><span>C++</span><span class="muted">Advanced</span></div><div class="bar"><div class="fill" data-w="88"></div></div></div>
+          <div class="skill"><div class="label"><span>Web (HTML/CSS/JS)</span><span class="muted">Intermediate</span></div><div class="bar"><div class="fill" data-w="74"></div></div></div>
+          <div class="skill"><div class="label"><span>ArcGIS, NumPy, Matplotlib</span><span class="muted">Intermediate</span></div><div class="bar"><div class="fill" data-w="70"></div></div></div>
         </div>
 
-        <div class="card">
-          <h2>Selected Projects</h2>
-          <div class="small" style="margin-top:6px">Run-Length Priority Queue – Research implementation in C++ and Python. See publication link in Experience section.</div>
+        <div class="panel section">
+          <h2>Interests</h2>
+          <p class="muted">Building Android apps, web projects, chess, caring for cats, gaming (Minecraft, Counter-Strike, Roblox)</p>
         </div>
       </aside>
     </div>
-
-    <footer>
-      <div>Made with HTML & CSS • Portfolio of Lorenz Dion O. Baldeo</div>
-    </footer>
   </div>
+
+  <script>
+    // copy email helper
+    function copyEmail(){
+      navigator.clipboard && navigator.clipboard.writeText(document.getElementById('email').textContent).then(()=>{
+        toast('Email copied to clipboard')
+      }).catch(()=>{toast('Could not copy')})
+    }
+
+    // small toast
+    function toast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style,{position:'fixed',right:'20px',bottom:'20px',padding:'10px 14px',background:'rgba(18,34,18,0.9)',color:'white',borderRadius:'10px',zIndex:9999});
+      document.body.appendChild(t);
+      setTimeout(()=>t.style.opacity='0',1600);
+      setTimeout(()=>t.remove(),2000);
+    }
+
+    // detail panel
+    function showDetail(id){
+      const el = document.getElementById('detail');
+      const map = {
+        abakoda: '<strong>ABAKODA 2024</strong><p class="muted">Rookie of the Year, Top 13 nationwide in an introductory algorithmic contest.</p>',
+        tama: '<strong>Tool Assisted Mathematics 2024</strong><p class="muted">Placed 34th nationwide in a Project-Euler style contest.</p>',
+        hkico: '<strong>HKICO 2024</strong><p class="muted">Gold Medal, top 10% globally.</p>',
+        calico: '<strong>CALICO Fall 2024</strong><p class="muted">Silver Block, ranked 84th out of 800+ global teams.</p>',
+        icsc: '<strong>ICSC 2025</strong><p class="muted">Qualified for Pre-Finals and earned Special Honors for high-quality coding submissions.</p>',
+        yes: '<strong>YES Award 2025</strong><p class="muted">Department of Science and Technology recognition for distinction in international science and math competitions.</p>'
+      };
+      el.innerHTML = map[id] || '';
+    }
+
+    // animate skills on load
+    window.addEventListener('load', ()=>{
+      document.querySelectorAll('.fill').forEach(f=>{
+        const w = f.getAttribute('data-w');
+        setTimeout(()=>f.style.width = w + '%',80);
+      });
+    });
+
+    // print handler
+    function printResume(){
+      window.print();
+    }
+
+    // allow downloading file
+    function downloadHTML(){
+      const blob = new Blob([document.documentElement.outerHTML],{type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Lorenz_Baldeo_Resume.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  </script>
+
+  <style media="print">
+    body{background:white}
+    header.top,.btn,.timeline button{display:none}
+    .wrap{max-width:100%;padding:0}
+    .panel{box-shadow:none;border-radius:0}
+  </style>
 </body>
 </html>
